@@ -1,21 +1,16 @@
 package main
 
 import (
-	"encoding/json"
+	"./container"
+	"./routers"
+	"github.com/gorilla/mux"
 	"log"
 	"net/http"
-	"github.com/gorilla/mux"
 )
 
-func ping(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode("pong")
-}
-
 func main() {
+	container.Connect()
 	router := mux.NewRouter()
-	router.HandleFunc("/", ping).Methods("GET")
-	router.HandleFunc("/", ping).Methods("GET")
-    connect()
-
+	router = routers.SetRoutes(router)
 	log.Fatal(http.ListenAndServe(":8000", router))
 }
